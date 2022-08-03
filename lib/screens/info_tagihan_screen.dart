@@ -32,6 +32,7 @@ class _InfoTagihanScreenState extends State<InfoTagihanScreen> {
 
     var response = await Network().postT(formData, '/info-tagihan-p');
     var body = jsonDecode(response.body);
+    print(body);
 
     if (body['success']) {
       setState(() {

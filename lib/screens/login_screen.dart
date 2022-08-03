@@ -37,20 +37,25 @@ class _LoginScreenState extends State<LoginScreen> {
       'password': _password.text,
     };
 
-    var response = await Network().auth(formData, '/login');
-    var body = json.decode(response.body);
+    try {
+      var response = await Network().auth(formData, '/login');
+      var body = json.decode(response.body);
+      print(body);
 
-    if (body['success']) {
-      Navigator.pushReplacementNamed(context, '/leanding');
+      if (body['success']) {
+        Navigator.pushReplacementNamed(context, '/leanding');
 
-      SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString('no_pel', body['user']['no_pelanggan']);
-      _prefs.setString('username', body['user']['username']);
-      _prefs.setString('token', body['token']);
-    } else {
-      setState(() {
-        tampil(body['msg']);
-      });
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        _prefs.setString('no_pel', body['user']['no_pelanggan']);
+        _prefs.setString('username', body['user']['username']);
+        _prefs.setString('token', body['token']);
+      } else {
+        setState(() {
+          tampil(body['msg']);
+        });
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 

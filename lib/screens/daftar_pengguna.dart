@@ -40,6 +40,8 @@ class _DaftarPenggunaScreenState extends State<DaftarPenggunaScreen> {
     var responses = await Network().auth(formData, '/register-pengguna');
     var body = json.decode(responses.body);
 
+    print(body);
+
     if (body['success']) {
       EasyLoading.showSuccess('Register Berhasil');
 
@@ -51,9 +53,9 @@ class _DaftarPenggunaScreenState extends State<DaftarPenggunaScreen> {
       _prefs.setString('token', body['token']);
     } else {
       if (body['msg']['no_pelanggan'] != null) {
-        EasyLoading.showInfo(body['msg']['no_pelanggan'][0].toString());
+        EasyLoading.showInfo(body['msg']['no_pelanggan'][0]);
       } else if (body['msg']['no_telp'] != null) {
-        EasyLoading.showInfo(body['msg']['no_telp'][0].toString());
+        EasyLoading.showInfo(body['msg']['no_telp'][0]);
       }
     }
   }
